@@ -1,0 +1,73 @@
+- name: demo-clinic-data
+  kind: postgres
+  configuration:
+    connection_info:
+      database_url:
+        from_env: PG_DATABASE_URL
+      isolation_level: read-committed
+      use_prepared_statements: false
+  logical_models:
+    - fields:
+        - name: patient_name
+          type:
+            nullable: true
+            scalar: text
+        - name: patient_gender
+          type:
+            nullable: true
+            scalar: varchar
+        - name: patient_id
+          type:
+            nullable: true
+            scalar: integer
+        - name: patient_birth_year
+          type:
+            nullable: true
+            scalar: numeric
+        - name: street_number
+          type:
+            nullable: true
+            scalar: text
+        - name: masked_contact_number
+          type:
+            nullable: true
+            scalar: text
+        - name: most_recent_appointment
+          type:
+            nullable: true
+            scalar: timestamp
+      name: patient_data_masked
+  native_queries:
+    - arguments:
+        search_text:
+          description: ""
+          nullable: false
+          type: text
+      code: |-
+        SELECT
+                    CONCAT(p.first_name, ' ', LEFT(p.last_name, 1)) AS patient_name,
+                    p.gender AS patient_gender,
+                    p.id AS patient_id,
+                    EXTRACT(YEAR FROM p.date_of_birth) AS patient_birth_year,
+                    SUBSTRING(p.address, '^[0-9]+') AS street_number,
+                    CONCAT('**** **** **** ', RIGHT(p.contact_number, 4)) AS masked_contact_number,
+                    a.appointment_date AS most_recent_appointment
+                FROM
+                    patients p
+                LEFT JOIN (
+                    SELECT
+                        patient_id,
+                        MAX(appointment_date) AS appointment_date
+                    FROM
+                        appts
+                    GROUP BY
+                        patient_id
+                ) a ON p.id = a.patient_id
+                WHERE
+                    p.first_name ILIKE '%' || {{search_text}} || '%'
+                    OR p.last_name ILIKE '%' || {{search_text}} || '%'
+                    OR p.address ILIKE '%' || {{search_text}} || '%'
+                    OR p.contact_number LIKE '%' || {{search_text}} || '%';
+      returns: patient_data_masked
+      root_field_name: mask_patient_data
+  tables: "!include demo-clinic-data/tables/tables.yaml"
