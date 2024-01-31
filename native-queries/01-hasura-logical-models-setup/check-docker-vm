@@ -1,0 +1,2 @@
+#!/bin/bash
+grep -q "hasura init cli-demo" /root/.bash_history || fail-message "Have you initialized your Hasura project? `> hasura init cli-demo`"

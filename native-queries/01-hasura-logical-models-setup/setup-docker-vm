@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euxo pipefail
+
+# # start Hasura and apply metadata for this challenge
+# # TODO: use healthchecks
+cd instruqt-logical-models/hasura
+ docker-compose up -d
+ hasura metadata apply
+# hasura console --address 0.0.0.0 --no-browser
+
+# BUG: seed data not being applied during `docker-compose up -d`

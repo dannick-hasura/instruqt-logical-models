@@ -1,0 +1,74 @@
+#!/bin/bash
+set -euxo pipefail
+
+echo "Running track setup script on host docker-vm"
+
+# Wait for the Instruqt host bootstrap to finish
+until [ -f /opt/instruqt/bootstrap/host-bootstrap-completed ]
+do
+    sleep 1
+done
+
+# Install Hasura CLI
+curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
+
+# Install Code Server
+mkdir -p /root/.local/share/code-server/User
+
+cat > /root/.local/share/code-server/User/settings.json <<-EOF
+{
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.startupEditor": "none",
+    "security.workspace.trust.enabled": false,
+}
+EOF
+
+# Install Code server
+curl -fsSL https://code-server.dev/install.sh | sh
+
+# download docker-compose and seed_data script
+#git clone https://gist.github.com/8151954f6c5e05bbf35bb4026db6eac5.git > test-folder
+
+#curl https://gist.githubusercontent.com/dannick-hasura/8151954f6c5e05bbf35bb4026db6eac5/raw/d1b4644b61aaf0cdb837d651aa4a50f247f693f5/docker-compose.yaml > docker-compose.yaml
+#curl https://gist.githubusercontent.com/dannick-hasura/8151954f6c5e05bbf35bb4026db6eac5/raw/d1b4644b61aaf0cdb837d651aa4a50f247f693f5/seed_data.sql > seed_data.sql
+
+# test
+git clone https://github.com/dannick-hasura/instruqt-logical-models.git --depth 1
+cd instruqt-logical-models
+
+# remove the files meant to config the Instruqt track
+rm -rf native-queries .gitignore .gitattributes
+
+# # start Hasura and apply metadata for this challenge
+# # TODO: use healthchecks
+# cd hasura
+# docker-compose up -d
+# hasura metadata apply
+# hasura console --address 0.0.0.0 --no-browser
+
+
+# Create Code Server startup script
+cat <<-EOF > /etc/systemd/system/code-server.service
+[Unit]
+Description=Code Server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/bin/code-server --host 0.0.0.0 --port 8090 --auth none /root
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Start Code Server
+systemctl enable code-server
+systemctl start code-server
+
+# Install Hasura extensions
+wget https://storage.googleapis.com/instruqt-example-images/HasuraHQ.hasura-0.2.15.vsix
+code-server --install-extension HasuraHQ.hasura-0.2.15.vsix

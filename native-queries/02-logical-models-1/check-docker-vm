@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euxo pipefail
+
+echo "Running challenge check script..."
+
+if ! docker container ls | grep -q "hasura/graphql-engine"; then
+    fail-message "There is no running container 'hasura'. Did you run it?"
+    exit 1
+fi
+
+if ! docker container ls | grep -q "postgres"; then
+    fail-message "There is no running container 'postgres'. Did you run it?"
+    exit 1
+fi

@@ -1,0 +1,31 @@
+slug: native-queries
+id: dtqncuj5hi4w
+title: Logical Models & Native Queries
+teaser: Logical models and native queries in Hasura.
+description: |-
+  This track walks you through setting up Hasura from a docker container and exploring the logical models and native queries features of Hasura.
+
+  **This track demonstrates how to:**
+    - Deploy Hasura from a docker container
+    - Connect to a database
+    - Create a logical model attached to a native query
+    - Define a query that will return masked data
+icon: https://hasura.io/blog/content/images/2022/02/profile_picture_standard.png
+tags:
+- logical models
+- hasura
+- native queries
+owner: hasura
+developers:
+- dannick@hasura.io
+show_timer: true
+skipping_enabled: true
+timelimit: 600
+lab_config:
+  overlay: false
+  width: 33
+  position: left
+  extend_ttl: 300
+  feedback_recap_enabled: false
+  loadingMessages: true
+checksum: "406358411115190239"
