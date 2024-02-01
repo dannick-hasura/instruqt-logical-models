@@ -5,6 +5,7 @@ set -euxo pipefail
 # # TODO: use healthchecks
 # cd instruqt-logical-models/hasura
 # docker-compose up -d
+# wait 10
 # hasura metadata apply
 # hasura console --address 0.0.0.0 --no-browser
 

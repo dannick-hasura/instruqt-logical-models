@@ -1,8 +1,8 @@
 ---
-slug: hasura-logical-models-setup
+slug: running-hasura-in-docker
 id: yg1urnnqufn4
 type: challenge
-title: Running Hasura with Docker
+title: Running Hasura
 teaser: Learn how to build and run the Hasura container
 notes:
 - type: text

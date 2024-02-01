@@ -28,4 +28,4 @@ lab_config:
   extend_ttl: 300
   feedback_recap_enabled: false
   loadingMessages: true
-checksum: "750913598252914606"
+checksum: "6231960076149931983"
