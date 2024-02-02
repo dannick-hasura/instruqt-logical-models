@@ -80,7 +80,6 @@ LEFT JOIN (
     OR p.contact_number LIKE '%' || {{search_text}} || '%';
 ```
 
-
 🏁 Finish
 =========
 
