@@ -78,6 +78,7 @@ docker-compose up -d
 ```
 🏃 Run the Hasura Console
 ===
+Head over to the Console tab to check out the new instance of Hasura.
 
 Hasura can be interacted with using the Console (user interface) or through code. We will interact with Hasura using the Hasura Console, run the console using the CLI:
 ```bash,run
