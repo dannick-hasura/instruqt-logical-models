@@ -1,4 +1,4 @@
-slug: native-queries
+slug: logical-models
 id: dtqncuj5hi4w
 title: Logical Models & Native Queries
 teaser: Logical models and native queries in Hasura.
@@ -28,4 +28,4 @@ lab_config:
   extend_ttl: 300
   feedback_recap_enabled: false
   loadingMessages: true
-checksum: "6231960076149931983"
+checksum: "11069512928641863203"

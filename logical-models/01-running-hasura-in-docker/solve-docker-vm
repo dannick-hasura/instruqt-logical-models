@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euxo pipefail
+
+echo "Running the auto-solve script..."
+
+cd instruqt-logical-models/hasura
+#docker compose up -d
+#hasura metadata apply --endpoint "http://0.0.0.0:8080"

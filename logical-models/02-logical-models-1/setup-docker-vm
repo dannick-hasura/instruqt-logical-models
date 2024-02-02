@@ -1,7 +1,5 @@
 #!/bin/bash
 set -euxo pipefail
 
-echo "Running the auto-solve script..."
-
 cd instruqt-logical-models/hasura
-hasura metadata apply
+docker-compose up -d

@@ -20,16 +20,12 @@ tabs:
 - title: Terminal
   type: terminal
   hostname: docker-vm
+  workdir: instruqt-logical-models/hasura/
 - title: Hasura
   type: service
   hostname: docker-vm
   path: /console/data/
   port: 8080
-- title: VS Code
-  type: service
-  hostname: docker-vm
-  path: /
-  port: 8090
 difficulty: ""
 timelimit: 600
 ---
