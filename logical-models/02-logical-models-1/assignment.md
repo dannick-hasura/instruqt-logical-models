@@ -51,6 +51,8 @@ Step 2 - Create our data masking function
 # Native Queries
 Now we get to the fun part, native queries allow us to leverage the underlying functionality of the database language -- in this case Postgres SQL. Let's write a SQL function that will return patient data but mask several pieces of private information.
 
+On the Native Queries tab, create a new query and paste this SQL function that will mask patient data.
+
 ```SQL
 SELECT
   CONCAT(p.first_name, ' ', LEFT(p.last_name, 1)) AS patient_name,
